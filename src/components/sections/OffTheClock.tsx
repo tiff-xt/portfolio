@@ -23,7 +23,7 @@ export function OffTheClock() {
           <figure>
             <HalftonePhoto
               src={ride}
-              alt="Me in a pink top and white patterned helmet, sitting on a black electric motorcycle at dusk, looking out over open fields."
+              alt="Me in a pink top and white patterned helmet, sitting on a black motorcycle at dusk, looking out over open fields."
               focus={[0.52, 0.5]}
               sizes="(min-width: 1200px) 1152px, 100vw"
               className="aspect-[4/5] rounded-3xl border border-line sm:aspect-[16/9]"
