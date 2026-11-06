@@ -1,0 +1,113 @@
+"use client";
+import dynamic from "next/dynamic";
+import { useRef } from "react";
+import { site } from "@/lib/site";
+import { Magnetic } from "../motion/Magnetic";
+
+// three.js is ~150 kB: keep it out of the critical path and off the server.
+const ParticleField = dynamic(() => import("./ParticleField"), { ssr: false });
+
+export function Hero() {
+  const hostRef = useRef<HTMLElement>(null);
+  const targetRef = useRef<HTMLSpanElement>(null);
+
+  return (
+    <section
+      ref={hostRef}
+      id="top"
+      className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden px-5 pb-14 pt-28 sm:px-10 sm:pb-20"
+    >
+      <ParticleField hostRef={hostRef} targetRef={targetRef} />
+
+      {/* Axis furniture, positioned from the plot geometry the field publishes. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-0 transition-opacity delay-700 duration-1000 [[data-particles=on]_&]:opacity-100"
+      >
+        <span
+          className="absolute h-px bg-line-strong"
+          style={{ left: "var(--plot-x0)", width: "calc(var(--plot-x1) - var(--plot-x0))", top: "var(--plot-y1)" }}
+        />
+        <span
+          className="absolute w-px bg-line"
+          style={{ left: "var(--plot-zero)", top: "var(--plot-y0)", height: "calc(var(--plot-y1) - var(--plot-y0))" }}
+        />
+        <span
+          className="absolute border-t border-dashed border-line"
+          style={{ left: "var(--plot-x0)", width: "calc(var(--plot-x1) - var(--plot-x0))", top: "var(--plot-thr)" }}
+        />
+        {["--plot-fcL", "--plot-fcR"].map((v) => (
+          <span
+            key={v}
+            className="absolute border-l border-dashed border-line"
+            style={{ left: `var(${v})`, top: "var(--plot-y0)", height: "calc(var(--plot-y1) - var(--plot-y0))" }}
+          />
+        ))}
+        <span
+          className="absolute -translate-x-full whitespace-nowrap pr-1 pt-2 font-mono text-[10px] tracking-wide text-muted"
+          style={{ left: "var(--plot-x1)", top: "var(--plot-y1)" }}
+        >
+          log₂ fold change →
+        </span>
+        <span
+          className="absolute -translate-y-full pb-1 pl-2 font-mono text-[10px] tracking-wide text-muted"
+          style={{ left: "var(--plot-zero)", top: "var(--plot-y0)" }}
+        >
+          ↑ −log₁₀ p
+        </span>
+        <span
+          className="absolute -translate-y-full pb-1 font-mono text-[10px] tracking-wide text-muted"
+          style={{ left: "var(--plot-x0)", top: "var(--plot-thr)" }}
+        >
+          p = 0.0025
+        </span>
+      </div>
+
+      <div className="relative mx-auto w-full max-w-6xl">
+        <p className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-muted">
+          <span className="mr-2 inline-block size-1.5 rounded-full bg-accent align-middle" />
+          {site.role}
+        </p>
+        <h1 className="font-display leading-[0.86] tracking-[-0.02em]">
+          <span
+            ref={targetRef}
+            className="particle-target inline-block whitespace-nowrap text-[clamp(6rem,30vw,8.5rem)] leading-none sm:text-[clamp(6rem,22vw,19rem)]"
+          >
+            {site.name}
+          </span>
+          <span className="sr-only">, {site.role.toLowerCase()}.</span>
+        </h1>
+        <div className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+          <p className="max-w-xl text-lg leading-relaxed text-muted sm:text-xl">{site.tagline}</p>
+          <div className="flex shrink-0 gap-3">
+            <Magnetic>
+              <a
+                href="#ask"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-fg px-6 text-sm font-medium text-bg transition-transform duration-200 active:scale-95"
+              >
+                Ask me anything
+                <span aria-hidden>↘</span>
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href="#work"
+                className="inline-flex h-12 items-center rounded-full border border-line-strong px-6 text-sm font-medium transition-colors hover:bg-surface-2"
+              >
+                See work
+              </a>
+            </Magnetic>
+          </div>
+        </div>
+      </div>
+
+      <p
+        aria-hidden
+        data-readout
+        className="pointer-events-none absolute bottom-4 left-5 hidden font-mono text-[11px] tabular-nums tracking-wide text-muted sm:left-10 sm:block"
+      >
+        move your cursor through the data
+      </p>
+    </section>
+  );
+}

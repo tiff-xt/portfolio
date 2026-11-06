@@ -1,0 +1,51 @@
+import { Reveal } from "../motion/Reveal";
+import { SectionHeading } from "./SectionHeading";
+
+const principles = [
+  {
+    title: "Own the whole problem",
+    body: "From an incomplete idea through architecture, implementation, release and the debugging after. I talk directly with users and domain experts to find what they actually need.",
+  },
+  {
+    title: "The unglamorous states are the design",
+    body: "Loading, empty, error, partial, offline. Spacing, hierarchy and accessibility are engineering decisions, not decoration. A design system should make the next feature easier.",
+  },
+  {
+    title: "Performance is a pipeline",
+    body: "A slow chart is rarely just a chart problem. Request size, payload, parsing, memory and rendering all add up, and so does how much detail the user needs right now.",
+  },
+  {
+    title: "AI is an accelerator, not an authority",
+    body: "Structured outputs, deterministic rules around the model, and UI that shows what happened. The assistant on this page works that way, and you can see how below.",
+  },
+];
+
+export function Approach() {
+  return (
+    <section id="approach" className="px-5 py-28 sm:px-10 sm:py-40">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading index="01" kicker="Approach" title="Clarity is something you engineer." />
+        <ol className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2">
+          {principles.map((p, i) => (
+            <Reveal
+              as="li"
+              key={p.title}
+              index={i}
+              className="group relative bg-bg p-8 transition-colors duration-500 hover:bg-surface sm:p-10"
+            >
+              <span className="font-mono text-xs text-muted transition-colors group-hover:text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-6 text-2xl font-medium tracking-tight">{p.title}</h3>
+              <p className="mt-3 max-w-md leading-relaxed text-muted">{p.body}</p>
+              <span
+                aria-hidden
+                className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-out group-hover:scale-x-100"
+              />
+            </Reveal>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
