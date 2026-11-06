@@ -35,6 +35,17 @@ export const projects: Project[] = [
     hue: 235,
   },
   {
+    slug: "ai-front-desk",
+    title: "AI Front Desk",
+    summary:
+      "An AI front desk for a fictional preschool where the AI never computes a fact: deterministic policy code answers, the LLM only classifies and translates, and a guard rejects any number or date it can't back up. Includes a staff console for autonomy, gaps and live evals.",
+    tags: ["React", "TypeScript", "LLM guardrails", "Cloudflare Workers", "i18n", "Evals"],
+    href: "https://tiff-xt.github.io/ai-front-desk/",
+    repo: "https://github.com/tiff-xt/ai-front-desk",
+    status: "live",
+    hue: 300,
+  },
+  {
     slug: "portfolio",
     title: "This site",
     summary:
@@ -57,7 +68,8 @@ export const projects: Project[] = [
     title: "Orbital",
     summary: "A generative brand system rendered entirely with shaders: noise-driven identity, WebGL transitions.",
     tags: ["GLSL", "Three.js", "Creative coding"],
-    status: "planned",
+    status: "building",
+    repo: "https://github.com/tiff-xt/orbital",
     hue: 210,
   },
 ];

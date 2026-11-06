@@ -65,6 +65,28 @@ function motif(slug: string, hue: number) {
         </g>
       );
     }
+    case "ai-front-desk": {
+      // Question in, grounded answer out: a guard checkpoint between them.
+      return (
+        <g className="transition-transform duration-700 ease-out group-hover:-translate-y-1.5">
+          <rect x="44" y="40" width="132" height="34" rx="14" fill="currentColor" fillOpacity=".12" />
+          <rect x="58" y="53" width="80" height="7" rx="3.5" fill="currentColor" fillOpacity=".45" />
+          <rect x="128" y="96" width="148" height="62" rx="14" fill="var(--accent)" fillOpacity=".9" />
+          <rect x="144" y="112" width="104" height="7" rx="3.5" fill="var(--accent-fg)" fillOpacity=".85" />
+          <rect x="144" y="126" width="72" height="7" rx="3.5" fill="var(--accent-fg)" fillOpacity=".6" />
+          <rect x="144" y="140" width="40" height="7" rx="3.5" fill="var(--accent-2)" />
+          <circle cx="104" cy="104" r="15" fill="none" stroke="var(--accent-2)" strokeWidth="2" />
+          <path
+            d="M97 104l5 5 9-10"
+            fill="none"
+            stroke="var(--accent-2)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+      );
+    }
     case "motion-lab":
       return (
         <g fill="none" stroke={stroke} strokeWidth="1.2">
