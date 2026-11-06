@@ -56,13 +56,13 @@ export const projects: Project[] = [
     hue: 285,
   },
   {
-    slug: "motion-lab",
+    slug: "sprung",
     title: "Sprung",
     summary:
       "An npm library of micro-interactions driven by analytic springs compiled to CSS easings, with a gallery of 12 accessible components, a live spring playground and reduced-motion previews.",
     tags: ["npm package", "React", "Spring physics", "Web Animations API", "Accessibility"],
     href: "https://sprung.vercel.app",
-    repo: "https://github.com/tiff-xt/motion-lab",
+    repo: "https://github.com/tiff-xt/sprung",
     status: "live",
     hue: 262,
   },
