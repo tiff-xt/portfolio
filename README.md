@@ -1,5 +1,7 @@
 # Portfolio
 
+**Live:** https://tiff-xt.vercel.app/
+
 A personal site that is also a full-stack system: a GPU-rendered hero, a small
 motion system, and an assistant that answers questions about my technical work.
 The assistant is grounded in my own notes, cites what it used, and shows how

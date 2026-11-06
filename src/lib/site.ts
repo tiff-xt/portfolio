@@ -62,6 +62,7 @@ export const projects: Project[] = [
     summary:
       "Next.js with a GPU particle hero, a motion system, and a retrieval-grounded assistant on Workers AI and Postgres + pgvector, with deterministic guardrails and graceful fallback.",
     tags: ["Next.js", "WebGL", "RAG", "Postgres", "Edge AI"],
+    href: "https://tiff-xt.vercel.app/",
     repo: "https://github.com/tiff-xt/portfolio",
     status: "live",
     hue: 285,
