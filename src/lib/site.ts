@@ -46,6 +46,17 @@ export const projects: Project[] = [
     hue: 300,
   },
   {
+    slug: "nightjar",
+    title: "Nightjar",
+    summary:
+      "A fictional naked streetfighter modelled, lit and voiced entirely in code: a scroll-directed 3D showcase in a night garage, with an exploded view, a paint configurator and a synthesised V-twin.",
+    tags: ["three.js", "React Three Fiber", "Post-processing", "Web Audio", "Next.js"],
+    href: "https://nightjar-by-tiff.vercel.app",
+    repo: "https://github.com/tiff-xt/nightjar",
+    status: "live",
+    hue: 20,
+  },
+  {
     slug: "portfolio",
     title: "This site",
     summary:

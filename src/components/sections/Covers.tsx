@@ -87,6 +87,57 @@ function motif(slug: string, hue: number) {
         </g>
       );
     }
+    case "nightjar":
+      // Streetfighter silhouette under a spotlight cone.
+      return (
+        <g>
+          <defs>
+            <radialGradient id="nj-spot" cx="50%" cy="100%" r="75%">
+              <stop offset="0" stopColor="currentColor" stopOpacity=".3" />
+              <stop offset="1" stopColor="currentColor" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+          <path d="M138 0 L182 0 L262 192 L58 192 Z" fill="url(#nj-spot)" />
+          <ellipse cx="160" cy="174" rx="112" ry="9" fill="#000" fillOpacity=".35" />
+          <g className="transition-transform duration-700 ease-out group-hover:-translate-x-1">
+            {/* Tyres and rims */}
+            {[96, 226].map((x) => (
+              <g key={x}>
+                <circle cx={x} cy="140" r="30" fill="none" stroke="currentColor" strokeOpacity=".9" strokeWidth="9" />
+                <circle cx={x} cy="140" r="18" fill="none" stroke="var(--accent)" strokeWidth="1.5" />
+                <circle cx={x} cy="140" r="4" fill="currentColor" />
+              </g>
+            ))}
+            {/* Swingarm, trellis, fork, bars */}
+            <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M96 140 L150 122" strokeWidth="5" strokeOpacity=".8" />
+              <path d="M136 88 L176 80 L150 122 Z M176 80 L190 112 L150 122" strokeWidth="2.5" strokeOpacity=".7" />
+              <path d="M226 140 L204 74" strokeWidth="5" strokeOpacity=".85" />
+              <path d="M198 66 L216 62" strokeWidth="3" />
+              {/* Exhaust */}
+              <path d="M172 126 L140 138 L118 130" strokeWidth="4" strokeOpacity=".55" />
+            </g>
+            {/* Engine block */}
+            <rect x="148" y="100" width="40" height="32" rx="4" fill="currentColor" fillOpacity=".55" />
+            <rect x="150" y="104" width="36" height="2" fill="var(--bg)" fillOpacity=".5" />
+            <rect x="150" y="110" width="36" height="2" fill="var(--bg)" fillOpacity=".5" />
+            {/* Tank, seat, tail */}
+            <path d="M138 86 L156 70 L190 66 L204 76 L196 90 L150 92 Z" fill="currentColor" fillOpacity=".95" />
+            <path d="M100 82 L138 80 L140 88 L104 92 Z" fill="currentColor" fillOpacity=".6" />
+            <path d="M84 74 L104 80 L102 86 L88 82 Z" fill="currentColor" fillOpacity=".8" />
+            {/* Headlight and tail light */}
+            <circle
+              cx="212"
+              cy="80"
+              r="5"
+              fill="var(--accent-2)"
+              className="transition-opacity duration-500 group-hover:opacity-100"
+              opacity=".75"
+            />
+            <rect x="82" y="73" width="4" height="4" fill="var(--accent)" />
+          </g>
+        </g>
+      );
     case "sprung":
       return (
         <g fill="none" stroke={stroke} strokeWidth="1.2">
