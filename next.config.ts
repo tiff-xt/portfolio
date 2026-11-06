@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/chat": ["./content/knowledge/**/*.md"],
     "/api/health": ["./content/knowledge/**/*.md"],
+    "/opengraph-image": ["./assets/fonts/**"],
   },
   turbopack: {
     rules: {

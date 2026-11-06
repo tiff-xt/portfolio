@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { projects } from "@/lib/site";
+import { caseStudyBySlug } from "@/content/caseStudies";
 import { Reveal } from "../motion/Reveal";
 import { Tilt } from "../motion/Tilt";
 import { Cover } from "./Covers";
@@ -17,7 +19,7 @@ export function Work() {
         <SectionHeading index="03" kicker="Work" title="Things I've designed and built." />
         <ul className="grid gap-6 sm:grid-cols-2">
           {projects.map((p, i) => {
-            const href = p.href ?? p.repo;
+            const study = caseStudyBySlug(p.slug) ? `/work/${p.slug}` : undefined;
             return (
               <Reveal as="li" key={p.slug} index={i % 2}>
                 <Tilt className="group relative h-full rounded-3xl border border-line bg-surface p-3 sm:p-4">
@@ -25,15 +27,10 @@ export function Work() {
                   <div className="px-2 pb-3 pt-5 sm:px-3">
                     <div className="flex items-center justify-between gap-4">
                       <h3 className="text-xl font-medium tracking-tight">
-                        {href ? (
-                          <a
-                            href={href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="after:absolute after:inset-0 after:rounded-3xl"
-                          >
+                        {study ? (
+                          <Link href={study} className="after:absolute after:inset-0 after:rounded-3xl">
                             {p.title}
-                          </a>
+                          </Link>
                         ) : (
                           p.title
                         )}
@@ -51,16 +48,29 @@ export function Work() {
                         </li>
                       ))}
                     </ul>
-                    {p.repo && p.href && (
-                      <a
-                        href={p.repo}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="relative z-10 mt-4 inline-block font-mono text-xs text-muted underline-offset-4 hover:text-fg hover:underline"
-                      >
-                        Source ↗
-                      </a>
-                    )}
+                    <div className="relative z-10 mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-muted">
+                      {study && <span className="pointer-events-none text-fg">Read case study →</span>}
+                      {p.href && (
+                        <a
+                          href={p.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="underline-offset-4 hover:text-fg hover:underline"
+                        >
+                          Live site ↗
+                        </a>
+                      )}
+                      {p.repo && (
+                        <a
+                          href={p.repo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="underline-offset-4 hover:text-fg hover:underline"
+                        >
+                          Source ↗
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </Tilt>
               </Reveal>

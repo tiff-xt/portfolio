@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   title: `${site.name}, ${site.role.toLowerCase()}`,
   description: site.tagline,
   openGraph: { title: `${site.name}, ${site.role.toLowerCase()}`, description: site.tagline, type: "website" },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

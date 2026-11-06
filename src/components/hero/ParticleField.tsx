@@ -294,7 +294,13 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
     canvas.addEventListener("webglcontextlost", onLost);
 
     // Sample only after the display font has loaded, or letterforms won't match.
-    document.fonts.ready.then(() => {
+    // Wait for the display font (or letterforms won't match), then for an idle
+    // moment, so shader compilation never competes with hydration and input.
+    const whenIdle = (fn: () => void) =>
+      typeof window.requestIdleCallback === "function"
+        ? window.requestIdleCallback(fn, { timeout: 1200 })
+        : window.setTimeout(fn, 200);
+    const init = () => {
       if (disposed) return;
       applyTheme();
       build();
@@ -307,7 +313,8 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       document.addEventListener("visibilitychange", onVisibility);
       if (!reduce) window.addEventListener("pointermove", onPointer, { passive: true });
       start();
-    });
+    };
+    document.fonts.ready.then(() => whenIdle(init));
 
     return () => {
       disposed = true;
