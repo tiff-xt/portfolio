@@ -87,7 +87,7 @@ function motif(slug: string, hue: number) {
         </g>
       );
     }
-    case "motion-lab":
+    case "sprung":
       return (
         <g fill="none" stroke={stroke} strokeWidth="1.2">
           {Array.from({ length: 9 }, (_, i) => (
