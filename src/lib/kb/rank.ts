@@ -36,6 +36,16 @@ const SYNONYMS: Record<string, string[]> = {
   slow: ["performance"],
   realtime: ["collaborative", "concurrency"],
   sync: ["synchronization", "state"],
+  fun: ["interests", "outside"],
+  hobby: ["interests", "outside"],
+  hobbi: ["interests", "outside"],
+  free: ["interests", "outside"],
+  weekend: ["interests", "outside"],
+  personal: ["interests", "outside"],
+  life: ["interests", "outside"],
+  bike: ["motorcycles"],
+  ride: ["motorcycles"],
+  rid: ["motorcycles"],
 };
 
 export function tokenize(text: string): string[] {

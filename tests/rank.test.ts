@@ -20,3 +20,15 @@ describe("rankChunks", () => {
     expect(rankChunks("the and of", chunks)).toEqual([]);
   });
 });
+
+describe("rankChunks: casual phrasing", () => {
+  const notes = chunkMarkdown(`## Interests outside work
+### Motorcycles
+My main interest right now is riding motorcycles.
+## Frontend engineering
+React and TypeScript.`);
+
+  it.each(["what do you do for fun?", "any hobbies?", "do you ride a bike?"])("%s → interests", (q) => {
+    expect(rankChunks(q, notes)[0]?.chunk.section).toBe("Interests outside work");
+  });
+});

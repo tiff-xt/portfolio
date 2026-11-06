@@ -16,6 +16,12 @@ const env = getEnv();
 if (!env.DATABASE_URL) throw new Error("DATABASE_URL is required");
 const sql = neon(env.DATABASE_URL);
 
+const [{ exists }] = (await sql`select to_regclass('public.kb_chunks') is not null as exists`) as { exists: boolean }[];
+if (!exists) {
+  console.error("The kb_chunks table doesn't exist yet. Run `npm run db:migrate` first, then re-run this.");
+  process.exit(1);
+}
+
 const { chunks, source } = await loadFromFiles();
 if (source !== "private-files") {
   throw new Error(

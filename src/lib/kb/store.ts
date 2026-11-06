@@ -29,7 +29,13 @@ export async function loadChunks(env: Env): Promise<{ chunks: Chunk[]; source: K
       `) as Chunk[];
       if (rows.length) result = { chunks: rows, source: "database" };
     } catch (err) {
-      console.error("[kb] database read failed, falling back to files", err);
+      const missing = String(err).includes("does not exist");
+      console.error(
+        missing
+          ? "[kb] tables missing: run `npm run db:migrate` and `npm run kb:ingest`. Using file fallback."
+          : "[kb] database read failed, falling back to files",
+        missing ? "" : err,
+      );
     }
   }
   result ??= await loadFromFiles();
