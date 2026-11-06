@@ -42,7 +42,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "WebGL", "RAG", "Postgres", "Edge AI"],
     repo: "https://github.com/tiff-xt/portfolio",
     status: "live",
-    hue: 14,
+    hue: 285,
   },
   {
     slug: "motion-lab",

@@ -46,7 +46,7 @@ export function Assistant() {
   return (
     <section id="ask" className="px-5 py-28 sm:px-10 sm:py-40">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="04" kicker="Ask" title="Ask me anything technical." />
+        <SectionHeading index="05" kicker="Ask" title="Ask me anything technical." />
 
         <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
           {/* Conversation */}

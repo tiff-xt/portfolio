@@ -11,10 +11,10 @@
   --muted: #5f5b53;
   --line: rgb(20 20 19 / 0.12);
   --line-strong: rgb(20 20 19 / 0.24);
-  --accent: #e8431f;
+  --accent: #6a3fd6;
   --accent-fg: #ffffff;
   --accent-2: #0b8f80;
-  --focus: #e8431f;
+  --focus: #6a3fd6;
   --particle: #2a2926;
   color-scheme: light;
 }
@@ -28,10 +28,10 @@
     --muted: #9b978f;
     --line: rgb(237 234 227 / 0.1);
     --line-strong: rgb(237 234 227 / 0.22);
-    --accent: #ff6a45;
-    --accent-fg: #140803;
+    --accent: #a78bfa;
+    --accent-fg: #140a2b;
     --accent-2: #3ed6c2;
-    --focus: #ff8a6b;
+    --focus: #c4b1ff;
     --particle: #d9d5cc;
     color-scheme: dark;
   }
@@ -44,10 +44,10 @@
   --muted: #9b978f;
   --line: rgb(237 234 227 / 0.1);
   --line-strong: rgb(237 234 227 / 0.22);
-  --accent: #ff6a45;
-  --accent-fg: #140803;
+  --accent: #a78bfa;
+  --accent-fg: #140a2b;
   --accent-2: #3ed6c2;
-  --focus: #ff8a6b;
+  --focus: #c4b1ff;
   --particle: #d9d5cc;
   color-scheme: dark;
 }
@@ -254,4 +254,41 @@ body {
 ::view-transition-group(skill-indicator) {
   animation-duration: 480ms;
   animation-timing-function: var(--ease-spring);
+}
+
+/* ─── Halftone photo ─────────────────────────────────────── */
+.halftone {
+  --halftone-bg: var(--bg);
+}
+.halftone-dots {
+  z-index: 1;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Before reveal: dots only. The photo opens from the subject. */
+  .halftone[data-ready] .halftone-photo {
+    clip-path: circle(0% at var(--fx) var(--fy));
+    transition: clip-path 1600ms var(--ease-in-out);
+  }
+  .halftone[data-ready][data-in] .halftone-photo {
+    clip-path: circle(150% at var(--fx) var(--fy));
+  }
+  .halftone[data-ready] .halftone-dots {
+    z-index: 0;
+  }
+  /* After reveal: a halftone lens follows the cursor. */
+  .halftone[data-done] .halftone-dots {
+    z-index: 1;
+    opacity: 0;
+    mask-image: radial-gradient(circle 120px at var(--lx, -200px) var(--ly, -200px), #000 60%, transparent 100%);
+    transition: opacity var(--dur-3) var(--ease-out);
+  }
+  .halftone[data-done]:hover .halftone-dots {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .halftone-dots {
+    display: none;
+  }
 }

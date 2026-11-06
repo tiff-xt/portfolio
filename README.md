@@ -41,6 +41,17 @@ the plot coordinates under it.
   - The theme switch does a circular wipe that starts at the cursor.
 - Every effect has a reduced-motion path.
 
+### Photo that arrives as data
+
+The "Off the clock" photo is first drawn as a colour halftone: each dot is
+sized by brightness, glowing like an LED matrix in dark mode and printed like
+ink in light mode. The real photo then opens out from the subject. After that,
+hovering shows a halftone lens under the cursor.
+
+- The canvas is painted once, and again only on resize or theme change.
+- The reveal and the lens are CSS `clip-path` and `mask`, so they run on the compositor.
+- The `<img>` is the real content, and the canvas is decoration.
+
 ### Assistant: AI with deterministic edges
 
 ```
