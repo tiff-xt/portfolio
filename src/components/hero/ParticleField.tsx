@@ -70,6 +70,7 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       uRadius: { value: 120 },
       uPixelRatio: { value: 1 },
       uSize: { value: 2.2 },
+      uGlow: { value: 0 },
       uInk: { value: new Color() },
       uAccent: { value: new Color() },
       uAccent2: { value: new Color() },
@@ -96,9 +97,11 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       const css = (name: string, fallback: string) => cs.getPropertyValue(name).trim() || fallback;
       uniforms.uInk.value.setStyle(css("--particle", "#ddd"), LinearSRGBColorSpace);
       uniforms.uAccent.value.setStyle(css("--accent", "#a78bfa"), LinearSRGBColorSpace);
-      uniforms.uAccent2.value.setStyle(css("--accent-2", "#3fb6ff"), LinearSRGBColorSpace);
+      uniforms.uAccent2.value.setStyle(css("--accent-2", "#4f95ff"), LinearSRGBColorSpace);
       const dark = cs.colorScheme.includes("dark");
       material.blending = dark ? AdditiveBlending : NormalBlending;
+      // Neon glow only reads on a dark ground; on paper it just looks blurry.
+      uniforms.uGlow.value = dark ? 1 : 0;
       material.needsUpdate = true;
     };
 

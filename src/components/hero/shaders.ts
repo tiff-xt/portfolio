@@ -12,10 +12,12 @@ export const vertex = /* glsl */ `
   uniform float uRadius;
   uniform float uPixelRatio;
   uniform float uSize;
+  uniform float uGlow;
 
   varying float vHot;
   varying float vForm;
   varying float vPush;
+  varying float vScale;
 
   float easeOutCubic(float t) { return 1.0 - pow(1.0 - t, 3.0); }
 
@@ -42,7 +44,10 @@ export const vertex = /* glsl */ `
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 0.0, 1.0);
     float size = uSize * (abs(aHot) > 0.5 ? 1.65 : 1.0) * (1.0 + push * 1.2);
-    gl_PointSize = size * uPixelRatio;
+    // Glowing points get a larger sprite so the halo has room; the fragment
+    // shader keeps the solid core at the original size.
+    vScale = (uGlow > 0.5 && aHot < -0.5) ? 3.2 : 1.0;
+    gl_PointSize = size * vScale * uPixelRatio;
   }
 `;
 
@@ -54,20 +59,24 @@ export const fragment = /* glsl */ `
   varying float vHot;
   varying float vForm;
   varying float vPush;
+  varying float vScale;
 
   void main() {
     vec2 c = gl_PointCoord - 0.5;
     float r = length(c);
-    float alpha = smoothstep(0.5, 0.32, r);
-    if (alpha < 0.01) discard;
+    float core = 0.5 / vScale;
+    float alpha = smoothstep(core, core * 0.64, r);
+    // Faint neon halo: quadratic falloff to the sprite edge.
+    float halo = vScale > 1.0 ? pow(1.0 - smoothstep(0.0, 0.5, r), 2.0) * 0.3 : 0.0;
+    if (alpha + halo < 0.01) discard;
 
     vec3 hot = vHot > 0.5 ? uAccent : uAccent2;
     float heat = abs(vHot) > 0.5 ? 1.0 : 0.0;
-    // Significant points keep their colour while scattered and fade toward
-    // ink as they join the letterforms; the brush re-ignites everything.
-    float tint = clamp(heat * (1.0 - vForm * 0.55) + vPush * 0.9, 0.0, 1.0);
+    // Significant points stay in the plot at full colour; the pointer brush
+    // briefly ignites everything else.
+    float tint = clamp(heat + vPush * 0.9, 0.0, 1.0);
     vec3 color = mix(uInk, vPush > 0.05 && heat < 0.5 ? uAccent : hot, tint);
     float a = alpha * mix(0.55, 0.95, max(vForm, heat));
-    gl_FragColor = vec4(color, a);
+    gl_FragColor = vec4(color, max(a, halo));
   }
 `;
