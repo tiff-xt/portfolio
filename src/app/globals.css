@@ -13,7 +13,7 @@
   --line-strong: rgb(20 20 19 / 0.24);
   --accent: #6a3fd6;
   --accent-fg: #ffffff;
-  --accent-2: #0b8f80;
+  --accent-2: #0a67c8;
   --focus: #6a3fd6;
   --particle: #2a2926;
   color-scheme: light;
@@ -30,7 +30,7 @@
     --line-strong: rgb(237 234 227 / 0.22);
     --accent: #a78bfa;
     --accent-fg: #140a2b;
-    --accent-2: #3ed6c2;
+    --accent-2: #3fb6ff;
     --focus: #c4b1ff;
     --particle: #d9d5cc;
     color-scheme: dark;
@@ -46,7 +46,7 @@
   --line-strong: rgb(237 234 227 / 0.22);
   --accent: #a78bfa;
   --accent-fg: #140a2b;
-  --accent-2: #3ed6c2;
+  --accent-2: #3fb6ff;
   --focus: #c4b1ff;
   --particle: #d9d5cc;
   color-scheme: dark;

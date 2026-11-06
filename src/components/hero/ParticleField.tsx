@@ -96,7 +96,7 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       const css = (name: string, fallback: string) => cs.getPropertyValue(name).trim() || fallback;
       uniforms.uInk.value.setStyle(css("--particle", "#ddd"), LinearSRGBColorSpace);
       uniforms.uAccent.value.setStyle(css("--accent", "#a78bfa"), LinearSRGBColorSpace);
-      uniforms.uAccent2.value.setStyle(css("--accent-2", "#3cc"), LinearSRGBColorSpace);
+      uniforms.uAccent2.value.setStyle(css("--accent-2", "#3fb6ff"), LinearSRGBColorSpace);
       const dark = cs.colorScheme.includes("dark");
       material.blending = dark ? AdditiveBlending : NormalBlending;
       material.needsUpdate = true;

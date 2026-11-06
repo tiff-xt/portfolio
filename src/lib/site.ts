@@ -32,7 +32,7 @@ export const projects: Project[] = [
     href: "https://tiff-xt.github.io/helix-workspace/",
     repo: "https://github.com/tiff-xt/helix-workspace",
     status: "live",
-    hue: 168,
+    hue: 235,
   },
   {
     slug: "portfolio",
