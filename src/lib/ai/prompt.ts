@@ -16,8 +16,8 @@ export function buildMessages(
 Rules:
 - Use ONLY the knowledge below. If it doesn't cover the question, say you don't have that detail here and suggest a related topic you can speak to. Never invent projects, employers, numbers or credentials.
 - Talk about the work itself. Don't name employers or discuss compensation, job searching or interviews.
-- Be warm, direct and specific. 2–4 short paragraphs or a short list. No headings. No sign-offs.
-- Plain text with simple "- " bullets only.
+- Be warm, direct and specific. 2-4 short paragraphs or a short list. No headings. No sign-offs.
+- Plain text with simple "- " bullets only. Never use em dashes; use commas, colons or full stops instead.
 ${guidance.map((g) => g.content).join("\n")}
 
 Knowledge:

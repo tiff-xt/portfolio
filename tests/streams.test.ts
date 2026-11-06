@@ -45,3 +45,13 @@ describe("NDJSON protocol", () => {
     expect(await collect(decodeEvents(chunked(wire, [5, 2, 13])))).toEqual(events);
   });
 });
+
+import { stripEmDashes } from "@/lib/ai/cloudflare";
+
+describe("stripEmDashes", () => {
+  it("replaces em dashes, spaced or not, with a comma", () => {
+    expect(stripEmDashes("fast — and accessible")).toBe("fast, and accessible");
+    expect(stripEmDashes("fast—accessible")).toBe("fast, accessible");
+    expect(stripEmDashes("a-b and 2-4")).toBe("a-b and 2-4");
+  });
+});

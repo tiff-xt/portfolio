@@ -66,10 +66,12 @@ export const projects: Project[] = [
   {
     slug: "orbital",
     title: "Orbital",
-    summary: "A generative brand system rendered entirely with shaders: noise-driven identity, WebGL transitions.",
-    tags: ["GLSL", "Three.js", "Creative coding"],
-    status: "building",
+    summary:
+      "A fictional design studio rendered with one hand-written shader: a ray-marched planet, a seeded identity for every visitor, an audio-reactive synth and warp page transitions.",
+    tags: ["WebGL2", "GLSL", "Web Audio", "Generative", "Next.js"],
+    href: "https://orbital-by-tiff.vercel.app/",
     repo: "https://github.com/tiff-xt/orbital",
+    status: "live",
     hue: 210,
   },
 ];

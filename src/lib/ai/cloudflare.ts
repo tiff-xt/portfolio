@@ -50,7 +50,7 @@ export async function* streamChat(
     if (data === "[DONE]") return;
     try {
       const token = (JSON.parse(data) as { response?: string }).response;
-      if (token) yield token;
+      if (token) yield stripEmDashes(token);
     } catch {
       // Ignore keep-alives / non-JSON frames.
     }
@@ -64,4 +64,9 @@ export async function embed(env: Env, texts: string[], signal?: AbortSignal): Pr
   const data = json.result?.data;
   if (!data || data.length !== texts.length) throw new AIUnavailableError("Malformed embedding response");
   return data;
+}
+
+/** House style: no em dashes in anything the site shows, model output included. */
+export function stripEmDashes(text: string) {
+  return text.replace(/\s*\u2014\s*/g, ", ");
 }
