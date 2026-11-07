@@ -154,7 +154,7 @@ export const caseStudies: CaseStudy[] = [
       "No downloaded model either. The bike, the lighting and the engine note are all generated in code.",
     ],
     approach: [
-      "The bike is built from a small geometry kit: rods between two points, swept tubes for the headers, coil springs, and bevelled side-profile extrusions that give the faceted tank its edges. Seven assemblies each have an explode vector.",
+      "The bike is built from a small geometry kit: rods between two points, swept tubes for the headers, coil springs, lathed tyre profiles, drilled rotors, and side-profile extrusions that taper across their width to give the tank, seat and tail their sharp, organic shapes. Seven assemblies each have an explode vector.",
       "One story-progress value drives everything: the camera keyframes, the exploded view, night mode with the headlight beam, and the callouts pinned to parts of the bike.",
     ],
     decisions: [
@@ -167,7 +167,7 @@ export const caseStudies: CaseStudy[] = [
         body: "A camera film offset keeps the bike clear of the text on wide screens and re-centres it on phones, without moving the camera's subject.",
       },
       {
-        title: "A V-twin with no samples",
+        title: "A parallel twin with no samples",
         body: "Pulses at the firing frequency, an uneven firing pattern, a sub-octave and an intake filter that opens with revs. Scroll speed and a hold-to-rev control drive it.",
       },
       {
