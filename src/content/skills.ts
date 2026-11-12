@@ -69,13 +69,13 @@ export const areas: SkillArea[] = [
   {
     id: "ai",
     title: "AI & LLM",
-    blurb: "Customer-facing AI features with structured outputs, where application rules stay deterministic.",
+    blurb: "AI features and agents built so that application rules stay deterministic: the model proposes, code and people decide, and evals measure it.",
     skills: [
       ...s(
         "proficient",
-        "AI product integration, Structured outputs, Prompt engineering, AI interaction design, Gemini APIs, Claude Code, Reviewing AI code",
+        "AI product integration, Agents with tool calling, Human-in-the-loop approval, Evals, Structured outputs, Prompt engineering, AI interaction design, Gemini APIs, Claude Code, Reviewing AI code",
       ),
-      ...s("familiar", "MCP, Agent patterns, Tool-based workflows, LLM orchestration"),
+      ...s("familiar", "MCP, Multi-agent orchestration, Fine-tuning"),
     ],
     ask: "How do you design AI features users can trust?",
   },
