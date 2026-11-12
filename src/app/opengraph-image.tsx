@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { site } from "@/lib/site";
 import { volcano } from "@/components/hero/volcano";
 
-export const alt = `${site.name}, ${site.role.toLowerCase()}: data-rich products, design systems and AI features`;
+export const alt = `${site.name}, ${site.role.toLowerCase()}: data-rich products, backend systems and AI features`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -56,7 +56,7 @@ export default async function Image() {
           {site.name}
         </div>
         <div style={{ fontSize: 30, lineHeight: 1.35, color: "#c9c5bd", maxWidth: 560, marginTop: 18 }}>
-          Data-rich products, design systems and AI features, from first sketch to production.
+          Data-rich products, the systems behind them, and AI features, from first sketch to production.
         </div>
       </div>
     </div>,

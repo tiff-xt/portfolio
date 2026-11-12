@@ -1,9 +1,9 @@
 /** Single source of truth for identity and links. Edit freely. */
 export const site = {
   name: "Tiff",
-  role: "Software engineer",
+  role: "Full-stack software engineer",
   tagline:
-    "I build interfaces that make complex things feel clear: data-rich products, design systems and AI features, from first sketch to production.",
+    "I build products end to end and make complex things feel clear: data-rich interfaces, the APIs and databases behind them, design systems and AI features, from first sketch to production.",
   github: "https://github.com/tiff-xt",
   email: "", // optional: shown in the footer when set
   linkedin: "", // optional

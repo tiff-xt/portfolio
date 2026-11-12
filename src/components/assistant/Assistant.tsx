@@ -106,7 +106,7 @@ export function Assistant() {
                   }}
                   rows={1}
                   maxLength={2000}
-                  placeholder="Ask about frontend, data viz, AI, testing…"
+                  placeholder="Ask about frontend, backend, data viz, AI…"
                   className="max-h-40 min-h-10 flex-1 resize-none bg-transparent px-2 py-2 outline-none [field-sizing:content] placeholder:text-muted focus-visible:outline-none"
                 />
                 {busy ? (

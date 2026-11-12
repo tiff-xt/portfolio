@@ -56,15 +56,15 @@ export const areas: SkillArea[] = [
   {
     id: "backend",
     title: "Backend & full stack",
-    blurb: "Comfortable owning the other side of the boundary: routes, migrations, auth and integrations.",
+    blurb: "APIs, data models and background systems, and the concurrency, reliability and performance work that keeps them correct under load.",
     skills: [
       ...s(
         "proficient",
-        "Node.js, Express, Python, Django, REST APIs, GraphQL APIs, SQL, Migrations, Auth, Event-driven workflows, Message queues",
+        "Python, FastAPI, Django, Node.js, Express, PostgreSQL, Relational design, Redis, REST APIs, GraphQL APIs, Migrations, Auth, Event-driven workflows, Message queues, Load testing",
       ),
-      ...s("familiar", "PostgreSQL, Relational design, Service-oriented architecture"),
+      ...s("familiar", "Service-oriented architecture, Observability, WebSockets at scale"),
     ],
-    ask: "What kind of backend work are you comfortable owning?",
+    ask: "Tell me about a backend system you designed and built.",
   },
   {
     id: "ai",
