@@ -75,7 +75,7 @@ export const areas: SkillArea[] = [
         "proficient",
         "AI product integration, Agents with tool calling, Human-in-the-loop approval, Evals, Structured outputs, Prompt engineering, AI interaction design, Gemini APIs, Claude Code, Reviewing AI code",
       ),
-      ...s("familiar", "MCP, Multi-agent orchestration, Fine-tuning"),
+      ...s("familiar", "MCP, LLM orchestration"),
     ],
     ask: "How do you design AI features users can trust?",
   },
