@@ -30,9 +30,9 @@ const shot = (slug: string, file: string, alt: string, caption: string, width = 
 export const caseStudies: CaseStudy[] = [
   {
     slug: "lobbyd",
-    headline: "A ticketing backend designed around its worst minute, with the load tests to back it up.",
+    headline: "A ticketing backend designed around its worst minute, and an AI agent that operates it safely.",
     role: "Backend design and engineering, end to end",
-    focus: ["System design", "Concurrency", "Data modelling", "Reliability", "Performance"],
+    focus: ["System design", "Concurrency", "Reliability", "Performance", "AI agents", "Evals"],
     stack: [
       "Python",
       "FastAPI",
@@ -41,6 +41,7 @@ export const caseStudies: CaseStudy[] = [
       "Redis Streams",
       "OpenTelemetry",
       "Prometheus",
+      "Gemini (tool calling)",
       "Next.js",
     ],
     problem: [
@@ -51,6 +52,7 @@ export const caseStudies: CaseStudy[] = [
       "The claim is decided in Postgres, in one transaction. Everything else (caches, a waiting room, live updates) only decides who gets to try. Rules that must never break are database constraints, so they survive any bug in the code above them: a counter cannot exceed capacity, a seat cannot have two valid tickets, a hold cannot become two orders.",
       "Work that crosses a process boundary goes through a transactional outbox and is safe to run twice. A small payment simulator can be told to decline, duplicate, reorder, stall or go silent, and a test suite drives the system through every one of those and checks it ends up correct.",
       "Then it is measured. Load tests found seven real problems, which are written up in the order they were found, bad numbers included, and thirty-two invariant checks run after every concurrency test and every five minutes in production.",
+      "On top sits an AI assistant that answers questions about a user's own orders and teams and can act for them. It is built on the assumption that the model will sometimes be wrong or be talked into things, so nothing that keeps the system safe depends on the prompt.",
     ],
     decisions: [
       {
@@ -70,15 +72,32 @@ export const caseStudies: CaseStudy[] = [
         body: "Tickets carry an Ed25519 signature so a scanner can verify them offline. Two offline doors still cannot see each other, so a copied code could get in once at each. The design bounds that, records it and reports it, instead of pretending it away.",
       },
       {
+        title: "Treat the model as untrusted",
+        body: "The agent's tools are calls to the public API with the signed-in user's own token, so it can only see and do what that user could. Anything that changes state is stored and shown to the user first, and approving runs exactly the call that was shown. Text planted in a tournament description can, at worst, make it ask a question.",
+      },
+      {
+        title: "Measure the agent, and distrust the measurement",
+        body: "Fourteen scenarios build real state, ask what a user would ask and grade the outcome with plain checks on what happened: which tools ran, what changed, which figures are in the answer. The first run scored 12 of 14, and both failures were faults in my scenarios, not the model. A free Gemini model now passes all fourteen.",
+      },
+      {
         title: "One checkout, one trace",
         body: "The trace context travels with each outbox event and comes back on the provider's webhook, so a purchase reads as a single timeline across the API, two queues, the worker and the payment provider.",
       },
     ],
     outcome: [
       "On a 4 CPU machine shared with the load generator: holds at 65 ms median and 120 ms at the 95th percentile within capacity, 712 orders in ten seconds under overload, and no oversold seat, broken invariant or deadlock in any run.",
-      "Around 200 tests against a real Postgres and Redis, decision records for each major choice, a scaling plan for 100 times the load, and a live demo running on free hosting.",
+      "Around 230 tests against a real Postgres and Redis, decision records for each major choice, a scaling plan for 100 times the load, and a live demo running on free hosting.",
+      "An agent that passes 14 of 14 evaluation scenarios on a free model, with every step it takes recorded and a human approval before every change.",
     ],
     shots: [
+      shot(
+        "lobbyd",
+        "assistant",
+        "A chat panel where the assistant asks for approval before withdrawing a team",
+        "The assistant looks things up by itself, and asks before it changes anything. The answers here are from a live model.",
+        1120,
+        700,
+      ),
       shot(
         "lobbyd",
         "seats",

@@ -27,8 +27,8 @@ export const projects: Project[] = [
     slug: "lobbyd",
     title: "lobbyd",
     summary:
-      "A ticketing backend for gaming tournaments, built for the minute a sale opens: seats that cannot be sold twice, payments that survive a misbehaving provider, a waiting room, offline ticket scanning and live brackets. Load tested, with the numbers published.",
-    tags: ["Python", "FastAPI", "Postgres", "Redis", "System design", "Observability"],
+      "A ticketing backend for gaming tournaments, built for the minute a sale opens: seats that cannot be sold twice, payments that survive a misbehaving provider, a waiting room, offline ticket scanning and live brackets. An AI agent operates it through its own API, with approval before any change. Load tested and evaluated, with the numbers published.",
+    tags: ["Python", "FastAPI", "Postgres", "Redis", "System design", "AI agents", "Evals"],
     href: "https://lobbyd.vercel.app",
     repo: "https://github.com/tiff-xt/lobbyd",
     status: "live",
