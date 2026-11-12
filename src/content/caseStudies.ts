@@ -29,6 +29,99 @@ const shot = (slug: string, file: string, alt: string, caption: string, width = 
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "lobbyd",
+    headline: "A ticketing backend designed around its worst minute, with the load tests to back it up.",
+    role: "Backend design and engineering, end to end",
+    focus: ["System design", "Concurrency", "Data modelling", "Reliability", "Performance"],
+    stack: [
+      "Python",
+      "FastAPI",
+      "SQLAlchemy 2 (async)",
+      "Postgres",
+      "Redis Streams",
+      "OpenTelemetry",
+      "Prometheus",
+      "Next.js",
+    ],
+    problem: [
+      "Selling tickets looks like a small feature list. It hides most of what makes backends hard: two people wanting the same seat in the same millisecond, a payment provider that confirms twice or not at all, a hundred thousand buyers arriving in one minute, and a venue door where the network drops.",
+      "I wanted one project that takes each of those seriously instead of naming them: a ticketing and registration system for gaming tournaments, where every claim in the write-up is backed by a test or a measurement.",
+    ],
+    approach: [
+      "The claim is decided in Postgres, in one transaction. Everything else (caches, a waiting room, live updates) only decides who gets to try. Rules that must never break are database constraints, so they survive any bug in the code above them: a counter cannot exceed capacity, a seat cannot have two valid tickets, a hold cannot become two orders.",
+      "Work that crosses a process boundary goes through a transactional outbox and is safe to run twice. A small payment simulator can be told to decline, duplicate, reorder, stall or go silent, and a test suite drives the system through every one of those and checks it ends up correct.",
+      "Then it is measured. Load tests found seven real problems, which are written up in the order they were found, bad numbers included, and thirty-two invariant checks run after every concurrency test and every five minutes in production.",
+    ],
+    decisions: [
+      {
+        title: "Losing must be as cheap as winning",
+        body: "Most hold attempts in a sale fail. Claims are conditional updates with locks taken in a fixed order, so a refused buyer gets an answer in milliseconds and nothing deadlocks. Mutation tests proved the concurrency tests actually catch the bugs they claim to.",
+      },
+      {
+        title: "At least once, everywhere, and harmless",
+        body: "Idempotency keys on every write, an outbox for every event, a guarded state machine for payments. Duplicate, late and out-of-order news from the provider changes nothing, and a lost webhook is found by polling.",
+      },
+      {
+        title: "Shape the spike before it reaches the database",
+        body: "A waiting room held entirely in Redis admits buyers at a steady rate with signed tokens. Under a 1,500-buyer rush it cut the failure rate from 2.4% to 0.3%, and with caching switched off the same rush failed 19.8% of requests.",
+      },
+      {
+        title: "State the limitation plainly",
+        body: "Tickets carry an Ed25519 signature so a scanner can verify them offline. Two offline doors still cannot see each other, so a copied code could get in once at each. The design bounds that, records it and reports it, instead of pretending it away.",
+      },
+      {
+        title: "One checkout, one trace",
+        body: "The trace context travels with each outbox event and comes back on the provider's webhook, so a purchase reads as a single timeline across the API, two queues, the worker and the payment provider.",
+      },
+    ],
+    outcome: [
+      "On a 4 CPU machine shared with the load generator: holds at 65 ms median and 120 ms at the 95th percentile within capacity, 712 orders in ten seconds under overload, and no oversold seat, broken invariant or deadlock in any run.",
+      "Around 200 tests against a real Postgres and Redis, decision records for each major choice, a scaling plan for 100 times the load, and a live demo running on free hosting.",
+    ],
+    shots: [
+      shot(
+        "lobbyd",
+        "seats",
+        "A venue seat map with three seats selected and an order summary",
+        "The seat map: seats taken by other buyers grey out within a quarter of a second, pushed over a WebSocket.",
+        1120,
+        700,
+      ),
+      shot(
+        "lobbyd",
+        "tickets",
+        "A paid order with two tickets, each with a branded QR code",
+        "Tickets carry a signed token in a branded QR code that a scanner can verify with no network.",
+        1120,
+        700,
+      ),
+      shot(
+        "lobbyd",
+        "sales",
+        "An organizer dashboard with net sales, orders, teams and a bar per ticket type",
+        "The organizer's view of a sale, live: sold, in baskets, refunded, checked in.",
+        1120,
+        700,
+      ),
+      shot(
+        "lobbyd",
+        "bracket",
+        "A double-elimination bracket with a winners bracket and a live indicator",
+        "Double-elimination brackets that update live for every viewer, whichever server they are connected to.",
+        1120,
+        700,
+      ),
+      shot(
+        "lobbyd",
+        "home",
+        "The lobbyd home page with an animated arena of seats and a list of tournaments",
+        "The demo client, generated from the API's own types.",
+        1120,
+        700,
+      ),
+    ],
+  },
+  {
     slug: "helix-workspace",
     headline: "Designing clarity into complex scientific workflows.",
     role: "Design and engineering, end to end",

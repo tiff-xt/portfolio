@@ -87,6 +87,45 @@ function motif(slug: string, hue: number) {
         </g>
       );
     }
+    case "lobbyd": {
+      // An arena seen from above: rows of seats curving round a stage, some
+      // sold, a few held, and one ticket stub.
+      const rand = mulberry32(11);
+      const seats = [];
+      for (let row = 0; row < 7; row++) {
+        const count = 11 + row * 2;
+        for (let i = 0; i < count; i++) {
+          const angle = ((i / (count - 1)) * 2 - 1) * 1.05;
+          const radius = 46 + row * 15;
+          const roll = rand();
+          seats.push({
+            x: Math.round((160 + Math.sin(angle) * radius * 1.25) * 10) / 10,
+            y: Math.round((34 + Math.cos(angle) * radius * 0.8) * 10) / 10,
+            size: 4.5 + row * 0.5,
+            state: roll < 0.12 ? "held" : roll < 0.62 ? "sold" : "free",
+          });
+        }
+      }
+      return (
+        <g>
+          <path d="M112 22 Q160 40 208 22 L208 28 Q160 47 112 28 Z" fill="var(--accent-2)" fillOpacity=".85" />
+          <g className="origin-[160px_40px] transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+            {seats.map((seat, i) => (
+              <rect
+                key={i}
+                x={seat.x - seat.size / 2}
+                y={seat.y - seat.size / 2}
+                width={seat.size}
+                height={seat.size}
+                rx="1.2"
+                fill={seat.state === "held" ? "var(--accent-2)" : "currentColor"}
+                fillOpacity={seat.state === "sold" ? 0.16 : seat.state === "held" ? 1 : 0.6}
+              />
+            ))}
+          </g>
+        </g>
+      );
+    }
     case "nightjar":
       // Streetfighter silhouette under a spotlight cone.
       return (

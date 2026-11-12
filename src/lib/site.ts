@@ -24,6 +24,17 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "lobbyd",
+    title: "lobbyd",
+    summary:
+      "A ticketing backend for gaming tournaments, built for the minute a sale opens: seats that cannot be sold twice, payments that survive a misbehaving provider, a waiting room, offline ticket scanning and live brackets. Load tested, with the numbers published.",
+    tags: ["Python", "FastAPI", "Postgres", "Redis", "System design", "Observability"],
+    href: "https://lobbyd.vercel.app",
+    repo: "https://github.com/tiff-xt/lobbyd",
+    status: "live",
+    hue: 75,
+  },
+  {
     slug: "helix-workspace",
     title: "Helix Workspace",
     summary:
