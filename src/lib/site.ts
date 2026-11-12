@@ -3,7 +3,7 @@ export const site = {
   name: "Tiff",
   role: "Full-stack software engineer",
   tagline:
-    "I build products end to end and make complex things feel clear: data-rich interfaces, the APIs and databases behind them, design systems and AI features, from first sketch to production.",
+    "A full-stack engineer who designs. I build products end to end, from data-rich interfaces to the APIs and databases behind them, and I care as much about how a product feels to use as how it holds up under load.",
   github: "https://github.com/tiff-xt",
   email: "", // optional: shown in the footer when set
   linkedin: "", // optional

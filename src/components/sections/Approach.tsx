@@ -8,7 +8,7 @@ const principles = [
   },
   {
     title: "The unglamorous states are the design",
-    body: "Loading, empty, error, partial, offline. Spacing, hierarchy and accessibility are engineering decisions, not decoration. A design system should make the next feature easier.",
+    body: "I sweat the details users notice, such as spacing, motion and empty states, as much as the ones they never see, such as queries, queues and failure modes. Loading, error and offline are engineering decisions, not decoration.",
   },
   {
     title: "Performance is a pipeline",
