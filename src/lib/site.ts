@@ -8,7 +8,7 @@ export const site = {
     "A full-stack engineer who designs, with 6+ years of building products end to end: data-rich interfaces, the APIs and databases behind them, and AI features. I care as much about how a product feels to use as how it holds up under load.",
   github: "https://github.com/tiff-xt",
   email: "", // optional: shown in the footer when set
-  linkedin: "", // optional
+  linkedin: "https://www.linkedin.com/in/tiffanytranx/",
   url: "https://tiff-xt.vercel.app",
 } as const;
 

@@ -2,8 +2,8 @@ import { site } from "@/lib/site";
 
 export function Footer() {
   const links = [
-    { href: site.github, label: "GitHub" },
     site.linkedin && { href: site.linkedin, label: "LinkedIn" },
+    { href: site.github, label: "GitHub" },
     site.email && { href: `mailto:${site.email}`, label: "Email" },
   ].filter(Boolean) as { href: string; label: string }[];
 
