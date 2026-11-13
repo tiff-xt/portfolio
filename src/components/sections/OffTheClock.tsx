@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import ride from "@/assets/ride.jpg";
 import { askAssistant } from "../assistant/bus";
 import { Reveal } from "../motion/Reveal";
@@ -29,7 +30,13 @@ export function OffTheClock() {
               className="aspect-[4/5] rounded-3xl border border-line sm:aspect-[16/9]"
             />
             <figcaption className="mt-3 flex justify-between gap-4 font-mono text-[11px] text-muted">
-              <span>Motorcycles: my main thing right now.</span>
+              <span>
+                Motorcycles: my main thing right now. It is why{" "}
+                <Link href="/work/nightjar" className="text-fg underline decoration-line-strong underline-offset-4 hover:decoration-accent">
+                  Nightjar
+                </Link>
+                , the bike I built in code, exists.
+              </span>
               <span className="hidden sm:inline">Hover the photo to see it as data.</span>
             </figcaption>
           </figure>

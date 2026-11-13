@@ -19,8 +19,12 @@ const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: `${site.name}, ${site.role.toLowerCase()}`,
-  description: site.tagline,
-  openGraph: { title: `${site.name}, ${site.role.toLowerCase()}`, description: site.tagline, type: "website" },
+  description: `${site.tagline} ${site.scope}`,
+  openGraph: {
+    title: `${site.name}, ${site.role.toLowerCase()}`,
+    description: `${site.tagline} ${site.scope}`,
+    type: "website",
+  },
   twitter: { card: "summary_large_image" },
 };
 

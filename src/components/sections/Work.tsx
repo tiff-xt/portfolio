@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+import { TryToBreakIt } from "./TryToBreakIt";
 import Link from "next/link";
 import { type Project, projects } from "@/lib/site";
 import { caseStudyBySlug } from "@/content/caseStudies";
@@ -24,9 +26,17 @@ export function Work() {
         {/* The three to read first. One per row, so each gets a full look. */}
         <ul className="grid gap-6">
           {featured.map((p, i) => (
-            <Reveal as="li" key={p.slug} index={0}>
-              <Card project={p} number={i + 1} />
-            </Reveal>
+            <Fragment key={p.slug}>
+              <Reveal as="li" index={0}>
+                <Card project={p} number={i + 1} />
+              </Reveal>
+              {/* Proof for the card above, not a claim about it. */}
+              {p.slug === "lobbyd" && (
+                <Reveal as="li" index={1}>
+                  <TryToBreakIt />
+                </Reveal>
+              )}
+            </Fragment>
           ))}
         </ul>
 

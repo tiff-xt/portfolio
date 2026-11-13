@@ -163,7 +163,10 @@ export function Hero() {
           <span className="sr-only">, {site.role.toLowerCase()}.</span>
         </h1>
         <div className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-          <p className="max-w-xl text-lg leading-relaxed text-muted sm:text-xl">{site.tagline}</p>
+          <div className="max-w-xl">
+            <p className="text-balance text-2xl leading-snug tracking-tight sm:text-3xl">{site.tagline}</p>
+            <p className="mt-4 leading-relaxed text-muted sm:text-lg">{site.scope}</p>
+          </div>
           <div className="flex shrink-0 gap-3">
             <Magnetic>
               <a

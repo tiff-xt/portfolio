@@ -4,11 +4,15 @@ export const site = {
   role: "Full-stack software engineer",
   /** Shown beside the role in the hero. */
   experience: "6+ years",
-  tagline:
-    "A full-stack engineer who designs, with 6+ years of professional experience building products end to end: data-rich interfaces, the APIs and databases behind them, and AI features. I care as much about how a product feels to use as how it holds up under load.",
+  tagline: "I care as much about how a product feels to use as how it holds up under load.",
+  /** The supporting line under the tagline: what the work covers. */
+  scope:
+    "6+ years building products end to end: data-rich interfaces, the APIs and databases behind them, and AI features.",
   github: "https://github.com/tiff-xt",
   email: "", // optional: shown in the footer when set
   linkedin: "https://www.linkedin.com/in/tiffanytranx/",
+  /** The live lobbyd API, used by the "try to charge twice" panel. */
+  lobbydApi: "https://lobbyd-api.onrender.com",
   url: "https://tiff-xt.vercel.app",
 } as const;
 

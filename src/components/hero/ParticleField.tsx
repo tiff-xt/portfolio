@@ -32,7 +32,7 @@ type Props = {
 function plotRect(w: number, h: number, headlineTop: number) {
   if (w >= 900) return { x0: w * 0.45, x1: w * 0.97, y0: h * 0.12, y1: h * 0.76 };
   const y0 = 112;
-  return { x0: w * 0.06, x1: w * 0.94, y0, y1: Math.max(y0 + 130, headlineTop - 62) };
+  return { x0: w * 0.06, x1: w * 0.94, y0, y1: Math.max(y0 + 130, headlineTop - 74) };
 }
 
 /** How long a picture is held, and how long the change to the next takes. */
