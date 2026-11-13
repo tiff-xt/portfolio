@@ -16,8 +16,8 @@ export default function Home() {
         <Approach />
         <Skills />
         <Work />
-        <OffTheClock />
         <Assistant />
+        <OffTheClock />
       </main>
       <Footer />
     </>

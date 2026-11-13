@@ -67,6 +67,8 @@ export function Hero() {
         <p className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-muted">
           <span className="mr-2 inline-block size-1.5 rounded-full bg-accent align-middle" />
           {site.role}
+          <span className="mx-2 text-line-strong">/</span>
+          {site.experience}
         </p>
         <h1 className="font-display leading-[0.86] tracking-[-0.02em]">
           <span

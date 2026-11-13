@@ -2,8 +2,10 @@
 export const site = {
   name: "Tiff",
   role: "Full-stack software engineer",
+  /** Shown beside the role in the hero. */
+  experience: "6+ years",
   tagline:
-    "A full-stack engineer who designs. I build products end to end, from data-rich interfaces to the APIs and databases behind them, and I care as much about how a product feels to use as how it holds up under load.",
+    "A full-stack engineer who designs, with 6+ years of building products end to end: data-rich interfaces, the APIs and databases behind them, and AI features. I care as much about how a product feels to use as how it holds up under load.",
   github: "https://github.com/tiff-xt",
   email: "", // optional: shown in the footer when set
   linkedin: "", // optional
@@ -20,6 +22,10 @@ export type Project = {
   status: "live" | "building" | "planned";
   /** Hue (0–360) for the card's generative cover. */
   hue: number;
+  /** Featured projects lead the work section; the rest sit below as craft. */
+  featured?: boolean;
+  /** Featured only: what the project demonstrates, in a few words. */
+  proves?: string;
 };
 
 export const projects: Project[] = [
@@ -32,6 +38,8 @@ export const projects: Project[] = [
     href: "https://lobbyd.vercel.app",
     repo: "https://github.com/tiff-xt/lobbyd",
     status: "live",
+    featured: true,
+    proves: "Backend, system design and AI agents",
     hue: 75,
   },
   {
@@ -43,6 +51,8 @@ export const projects: Project[] = [
     href: "https://tiff-xt.github.io/helix-workspace/",
     repo: "https://github.com/tiff-xt/helix-workspace",
     status: "live",
+    featured: true,
+    proves: "Product engineering, data visualization and design systems",
     hue: 235,
   },
   {
@@ -54,6 +64,8 @@ export const projects: Project[] = [
     href: "https://tiff-xt.github.io/ai-front-desk/",
     repo: "https://github.com/tiff-xt/ai-front-desk",
     status: "live",
+    featured: true,
+    proves: "AI product engineering, guardrails and evals",
     hue: 300,
   },
   {
@@ -68,15 +80,15 @@ export const projects: Project[] = [
     hue: 20,
   },
   {
-    slug: "portfolio",
-    title: "This site",
+    slug: "orbital",
+    title: "Orbital",
     summary:
-      "Next.js with a GPU particle hero, a motion system, and a retrieval-grounded assistant on Workers AI and Postgres + pgvector, with deterministic guardrails and graceful fallback.",
-    tags: ["Next.js", "WebGL", "RAG", "Postgres", "Edge AI"],
-    href: "https://tiff-xt.vercel.app/",
-    repo: "https://github.com/tiff-xt/portfolio",
+      "A fictional design studio rendered with one hand-written shader: a ray-marched planet, a seeded identity for every visitor, an audio-reactive synth and warp page transitions.",
+    tags: ["WebGL2", "GLSL", "Web Audio", "Generative", "Next.js"],
+    href: "https://orbital-by-tiff.vercel.app/",
+    repo: "https://github.com/tiff-xt/orbital",
     status: "live",
-    hue: 285,
+    hue: 210,
   },
   {
     slug: "sprung",
@@ -90,14 +102,14 @@ export const projects: Project[] = [
     hue: 262,
   },
   {
-    slug: "orbital",
-    title: "Orbital",
+    slug: "portfolio",
+    title: "This site",
     summary:
-      "A fictional design studio rendered with one hand-written shader: a ray-marched planet, a seeded identity for every visitor, an audio-reactive synth and warp page transitions.",
-    tags: ["WebGL2", "GLSL", "Web Audio", "Generative", "Next.js"],
-    href: "https://orbital-by-tiff.vercel.app/",
-    repo: "https://github.com/tiff-xt/orbital",
+      "Next.js with a GPU particle hero, a motion system, and a retrieval-grounded assistant on Workers AI and Postgres + pgvector, with deterministic guardrails and graceful fallback.",
+    tags: ["Next.js", "WebGL", "RAG", "Postgres", "Edge AI"],
+    href: "https://tiff-xt.vercel.app/",
+    repo: "https://github.com/tiff-xt/portfolio",
     status: "live",
-    hue: 210,
+    hue: 285,
   },
 ];

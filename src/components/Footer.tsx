@@ -8,7 +8,7 @@ export function Footer() {
   ].filter(Boolean) as { href: string; label: string }[];
 
   return (
-    <footer className="px-5 pb-10 pt-20 sm:px-10">
+    <footer id="contact" className="scroll-mt-24 px-5 pb-10 pt-20 sm:px-10">
       <div className="mx-auto max-w-6xl border-t border-line pt-10">
         <div className="flex flex-col justify-between gap-10 sm:flex-row sm:items-end">
           <p className="font-display text-[clamp(3rem,9vw,7rem)] leading-[0.9]">
@@ -16,14 +16,14 @@ export function Footer() {
             <br />
             something <em className="text-accent">clear</em>.
           </p>
-          <ul className="flex gap-6">
+          <ul className="flex flex-wrap gap-x-6 gap-y-3" aria-label="Contact">
             {links.map((l) => (
               <li key={l.label}>
                 <a
                   href={l.href}
                   target={l.href.startsWith("http") ? "_blank" : undefined}
                   rel="noreferrer"
-                  className="text-sm underline decoration-line-strong underline-offset-4 transition-colors hover:decoration-accent"
+                  className="text-base underline decoration-line-strong underline-offset-4 transition-colors hover:decoration-accent"
                 >
                   {l.label}
                 </a>

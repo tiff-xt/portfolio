@@ -17,7 +17,7 @@ export function OffTheClock() {
   return (
     <section id="life" className="px-5 py-28 sm:px-10 sm:py-40">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="04" kicker="Off the clock" title="When I'm not shipping, I'm riding." />
+        <SectionHeading index="05" kicker="Off the clock" title="When I'm not shipping, I'm riding." />
 
         <Reveal>
           <figure>
