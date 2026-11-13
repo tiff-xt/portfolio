@@ -11,8 +11,16 @@ const principles = [
     body: "I sweat the details users notice, such as spacing, motion and empty states, as much as the ones they never see, such as queries, queues and failure modes. Loading, error and offline are engineering decisions, not decoration.",
   },
   {
+    title: "Make the wrong state impossible",
+    body: "The rules that must never break belong in the database as constraints, and every write should be safe to retry. Then a bug in the code above them is an error message, not a double charge or a seat sold twice.",
+  },
+  {
     title: "Performance is a pipeline",
     body: "A slow chart is rarely just a chart problem. Request size, payload, parsing, memory and rendering all add up, and so does how much detail the user needs right now.",
+  },
+  {
+    title: "Measure it, then say it",
+    body: "Load tests for the backend, evals for the AI, invariant checks for the data. I publish the numbers, including the ones that were bad before they were fixed.",
   },
   {
     title: "AI is an accelerator, not an authority",
@@ -24,7 +32,7 @@ export function Approach() {
   return (
     <section id="approach" className="px-5 py-28 sm:px-10 sm:py-40">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="01" kicker="Approach" title="Clarity is something you engineer." />
+        <SectionHeading index="02" kicker="Approach" title="Clarity is something you engineer." />
         <ol className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2">
           {principles.map((p, i) => (
             <Reveal

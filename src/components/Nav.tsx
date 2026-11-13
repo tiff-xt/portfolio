@@ -3,9 +3,9 @@ import { site } from "@/lib/site";
 import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
+  { href: "/#work", label: "Work" },
   { href: "/#approach", label: "Approach" },
   { href: "/#skills", label: "Skills" },
-  { href: "/#work", label: "Work" },
   { href: "/#ask", label: "Ask" },
   { href: "/#life", label: "Life" },
   { href: "/#contact", label: "Contact" },

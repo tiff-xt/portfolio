@@ -13,9 +13,9 @@ export default function Home() {
       <Nav />
       <main id="main">
         <Hero />
+        <Work />
         <Approach />
         <Skills />
-        <Work />
         <Assistant />
         <OffTheClock />
       </main>

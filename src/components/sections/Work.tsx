@@ -18,7 +18,7 @@ export function Work() {
   return (
     <section id="work" className="px-5 py-28 sm:px-10 sm:py-40">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="03" kicker="Work" title="Things I've designed and built." />
+        <SectionHeading index="01" kicker="Work" title="Things I've designed and built." />
 
         {/* The three to read first. One per row, so each gets a full look. */}
         <ul className="grid gap-6">

@@ -28,32 +28,6 @@ export const areas: SkillArea[] = [
     ask: "How do you approach frontend architecture for a complex product?",
   },
   {
-    id: "design",
-    title: "Design systems & UX",
-    blurb: "Systems that make the next feature easier: tokens, predictable interactions, and every state designed.",
-    skills: [
-      ...s(
-        "expert",
-        "Tailwind CSS, Design tokens, Reusable component systems, Interaction states, Visual hierarchy, Responsive design",
-      ),
-      ...s("proficient", "Storybook, Sass, Dark mode systems, Design-system architecture, Figma handoff"),
-    ],
-    ask: "What makes a component library actually good?",
-  },
-  {
-    id: "dataviz",
-    title: "Data visualization",
-    blurb: "Interactive scientific charts with 250,000+ points, with performance treated as a whole-pipeline problem.",
-    skills: [
-      ...s(
-        "expert",
-        "D3, Plotly, Scientific visualization, Large datasets, Rendering strategy, Visualization performance",
-      ),
-      ...s("proficient", "Volcano, violin & dot plots, Exploration interfaces"),
-    ],
-    ask: "How do you keep a chart with 250k points responsive?",
-  },
-  {
     id: "backend",
     title: "Backend & full stack",
     blurb: "APIs, data models and background systems, and the concurrency, reliability and performance work that keeps them correct under load.",
@@ -78,6 +52,32 @@ export const areas: SkillArea[] = [
       ...s("familiar", "MCP, LLM orchestration"),
     ],
     ask: "How do you design AI features users can trust?",
+  },
+  {
+    id: "design",
+    title: "Design systems & UX",
+    blurb: "Systems that make the next feature easier: tokens, predictable interactions, and every state designed.",
+    skills: [
+      ...s(
+        "expert",
+        "Tailwind CSS, Design tokens, Reusable component systems, Interaction states, Visual hierarchy, Responsive design",
+      ),
+      ...s("proficient", "Storybook, Sass, Dark mode systems, Design-system architecture, Figma handoff"),
+    ],
+    ask: "What makes a component library actually good?",
+  },
+  {
+    id: "dataviz",
+    title: "Data visualization",
+    blurb: "Interactive scientific charts with 250,000+ points, with performance treated as a whole-pipeline problem.",
+    skills: [
+      ...s(
+        "expert",
+        "D3, Plotly, Scientific visualization, Large datasets, Rendering strategy, Visualization performance",
+      ),
+      ...s("proficient", "Volcano, violin & dot plots, Exploration interfaces"),
+    ],
+    ask: "How do you keep a chart with 250k points responsive?",
   },
   {
     id: "quality",

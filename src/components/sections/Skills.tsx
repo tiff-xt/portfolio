@@ -47,7 +47,7 @@ export function Skills() {
   return (
     <section id="skills" className="px-5 py-28 sm:px-10 sm:py-40">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="02" kicker="Skills" title="Full stack, from the interface to the database." />
+        <SectionHeading index="03" kicker="Skills" title="Full stack, from the interface to the database." />
 
         <div className="grid gap-10 lg:grid-cols-[18rem_1fr] lg:gap-16">
           <div
