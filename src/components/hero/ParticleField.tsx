@@ -14,7 +14,8 @@ import {
   WebGLRenderer,
 } from "three";
 import { fragment, vertex } from "./shaders";
-import { FC_THRESHOLD, P_THRESHOLD, X_DOMAIN, Y_DOMAIN, mulberry32, volcano } from "./volcano";
+import { FC_THRESHOLD, LATENCY, P_THRESHOLD, latencyY, scenes, volcanoX, volcanoY } from "./scenes";
+import { mulberry32 } from "./volcano";
 import { clamp, easeOutExpo } from "@/lib/motion/tokens";
 
 type Props = {
@@ -24,16 +25,24 @@ type Props = {
   targetRef: React.RefObject<HTMLElement | null>;
 };
 
-/** Where the plot sits inside the hero, as fractions of its size. */
-function plotRect(w: number, h: number) {
-  return w >= 900
-    ? { x0: w * 0.45, x1: w * 0.97, y0: h * 0.12, y1: h * 0.76 }
-    : { x0: w * 0.06, x1: w * 0.94, y0: h * 0.11, y1: h * 0.45 };
+/**
+ * Where the plot sits inside the hero. Beside the headline on a wide screen;
+ * on a narrow one, between the nav and the headline, however much room that is.
+ */
+function plotRect(w: number, h: number, headlineTop: number) {
+  if (w >= 900) return { x0: w * 0.45, x1: w * 0.97, y0: h * 0.12, y1: h * 0.76 };
+  const y0 = 112;
+  return { x0: w * 0.06, x1: w * 0.94, y0, y1: Math.max(y0 + 130, headlineTop - 62) };
 }
 
+/** How long a picture is held, and how long the change to the next takes. */
+const HOLD_MS = 7000;
+const CHANGE_MS = 2000;
+
 /**
- * GPU particle field. Thousands of points start as a volcano plot, assemble
- * into the headline's exact letterforms, and scatter back into data on scroll.
+ * GPU particle field. Thousands of points draw a picture (a seat map, a
+ * latency chart, a volcano plot, in turn), lend most of themselves to the
+ * headline's exact letterforms, and scatter back into the picture on scroll.
  * All per-point motion runs in the vertex shader; the CPU only updates a
  * handful of uniforms per frame.
  *
@@ -65,6 +74,7 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       uTime: { value: 0 },
       uProgress: { value: reduce ? 1 : 0 },
       uScroll: { value: 0 },
+      uMix: { value: 0 },
       uMouse: { value: [-9999, -9999] },
       uMouseStrength: { value: 0 },
       uRadius: { value: 120 },
@@ -138,30 +148,71 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       return out;
     };
 
-    let rect = plotRect(1, 1);
-    const toScreen = (vx: number, vy: number): [number, number] => [
-      rect.x0 + ((vx + X_DOMAIN) / (2 * X_DOMAIN)) * (rect.x1 - rect.x0),
-      rect.y1 - (vy / Y_DOMAIN) * (rect.y1 - rect.y0),
-    ];
-    const fromScreen = (sx: number, sy: number): [number, number] => [
-      ((sx - rect.x0) / (rect.x1 - rect.x0)) * 2 * X_DOMAIN - X_DOMAIN,
-      ((rect.y1 - sy) / (rect.y1 - rect.y0)) * Y_DOMAIN,
-    ];
+    let rect = plotRect(1, 1, 0);
 
-    /** Expose plot geometry to the DOM axis overlay as CSS variables. */
+    /** Expose plot geometry to the DOM overlays as CSS variables. */
     const publishAxes = () => {
-      const [fcL] = toScreen(-FC_THRESHOLD, 0);
-      const [fcR, thr] = toScreen(FC_THRESHOLD, P_THRESHOLD);
-      const [zero] = toScreen(0, 0);
-      const vars: Record<string, number> = { x0: rect.x0, x1: rect.x1, y0: rect.y0, y1: rect.y1, zero, fcL, fcR, thr };
+      const w = rect.x1 - rect.x0;
+      const h = rect.y1 - rect.y0;
+      const vars: Record<string, number> = {
+        x0: rect.x0,
+        x1: rect.x1,
+        y0: rect.y0,
+        y1: rect.y1,
+        zero: rect.x0 + volcanoX(0, w),
+        fcL: rect.x0 + volcanoX(-FC_THRESHOLD, w),
+        fcR: rect.x0 + volcanoX(FC_THRESHOLD, w),
+        thr: rect.y0 + volcanoY(P_THRESHOLD, h),
+        open: rect.x0 + LATENCY.open * w,
+        budget: rect.y0 + latencyY(LATENCY.budget, h),
+      };
       for (const [k, v] of Object.entries(vars)) host.style.setProperty(`--plot-${k}`, `${v.toFixed(1)}px`);
+    };
+
+    // ── Scenes ───────────────────────────────────────────────
+    /** Per scene: where every point sits, and which are coloured. */
+    let pictures: { at: Float32Array; hot: Float32Array }[] = [];
+    let shown = 0;
+    let heading = -1; // the scene being changed to, or −1
+    let changeStart = 0;
+    let holdStart = 0;
+    const hint = readout?.textContent ?? "";
+
+    const load = (name: "A" | "B", index: number) => {
+      const suffix = name === "A" ? "" : "B";
+      const at = geometry.getAttribute(`aScatter${suffix}`) as BufferAttribute;
+      const hot = geometry.getAttribute(`aHot${suffix}`) as BufferAttribute;
+      (at.array as Float32Array).set(pictures[index].at);
+      (hot.array as Float32Array).set(pictures[index].hot);
+      at.needsUpdate = true;
+      hot.needsUpdate = true;
+    };
+    const land = (index: number) => {
+      shown = index;
+      heading = -1;
+      load("A", index);
+      uniforms.uMix.value = 0;
+    };
+    const go = (index: number, now: number) => {
+      if (index === (heading < 0 ? shown : heading)) return;
+      if (heading >= 0) land(heading);
+      host.setAttribute("data-scene", scenes[index].id);
+      if (readout) readout.textContent = hint;
+      if (reduce) {
+        land(index);
+      } else {
+        heading = index;
+        load("B", index);
+        changeStart = now;
+      }
+      holdStart = now + CHANGE_MS;
     };
 
     const build = () => {
       const hostBox = host.getBoundingClientRect();
       width = hostBox.width;
       height = hostBox.height;
-      rect = plotRect(width, height);
+      rect = plotRect(width, height, target.getBoundingClientRect().top - hostBox.top);
       publishAxes();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       renderer.setPixelRatio(dpr);
@@ -174,7 +225,6 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       uniforms.uRadius.value = Math.max(90, Math.min(width, height) * 0.16);
 
       const n = width < 640 ? 4200 : 9000;
-      const data = volcano(n);
       const rand = mulberry32(11);
       const textPts = sampleText();
       // Shuffle samples so the subset is spatially even.
@@ -184,31 +234,43 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       }
       const textCount = textPts.length ? Math.round(n * 0.64) : 0;
 
-      const scatter = new Float32Array(n * 2);
+      // Coloured points stay in the picture, so each scene keeps its story
+      // while the rest spell the headline.
+      pictures = scenes.map((scene) => {
+        const pts = scene.points(n, n - textCount, rect.x1 - rect.x0, rect.y1 - rect.y0);
+        const at = new Float32Array(n * 2);
+        const hot = new Float32Array(n);
+        for (let i = 0; i < n; i++) {
+          at[i * 2] = rect.x0 + pts[i].x;
+          at[i * 2 + 1] = rect.y0 + pts[i].y;
+          hot[i] = pts[i].hot;
+        }
+        return { at, hot };
+      });
+
       const tgt = new Float32Array(n * 2);
       const seed = new Float32Array(n);
-      const hot = new Float32Array(n);
+      const join = new Float32Array(n);
       for (let i = 0; i < n; i++) {
-        const [sx, sy] = toScreen(data[i].x, data[i].y);
-        scatter[i * 2] = sx;
-        scatter[i * 2 + 1] = sy;
-        // Hot (significant) points stay in the plot so the data story persists.
-        const joins = i < textCount && data[i].hot === 0;
-        if (joins) {
+        if (i < textCount) {
           const [tx, ty] = textPts[i % textPts.length];
           tgt[i * 2] = tx + (rand() - 0.5) * 1.6;
           tgt[i * 2 + 1] = ty + (rand() - 0.5) * 1.6;
-        } else {
-          tgt[i * 2] = sx;
-          tgt[i * 2 + 1] = sy;
+          join[i] = 1;
         }
         seed[i] = rand();
-        hot[i] = data[i].hot;
       }
-      geometry.setAttribute("aScatter", new BufferAttribute(scatter, 2));
+      if (heading >= 0) shown = heading;
+      heading = -1;
+      uniforms.uMix.value = 0;
+      const current = pictures[shown];
+      geometry.setAttribute("aScatter", new BufferAttribute(current.at.slice(), 2));
+      geometry.setAttribute("aScatterB", new BufferAttribute(current.at.slice(), 2));
+      geometry.setAttribute("aHot", new BufferAttribute(current.hot.slice(), 1));
+      geometry.setAttribute("aHotB", new BufferAttribute(current.hot.slice(), 1));
       geometry.setAttribute("aTarget", new BufferAttribute(tgt, 2));
       geometry.setAttribute("aSeed", new BufferAttribute(seed, 1));
-      geometry.setAttribute("aHot", new BufferAttribute(hot, 1));
+      geometry.setAttribute("aJoin", new BufferAttribute(join, 1));
       // Bounds are computed in-shader; skip three's culling.
       geometry.setAttribute("position", new BufferAttribute(new Float32Array(n * 3), 3));
       points.frustumCulled = false;
@@ -228,8 +290,9 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       }
       mouse.lastMove = performance.now();
       if (readout && mouse.ty >= 0 && mouse.ty <= height) {
-        const [fc, p] = fromScreen(mouse.tx, mouse.ty);
-        readout.textContent = `log₂FC ${fc >= 0 ? "+" : "−"}${Math.abs(fc).toFixed(2)}  ·  −log₁₀p ${Math.max(0, p).toFixed(2)}`;
+        const scene = scenes[heading < 0 ? shown : heading];
+        readout.textContent =
+          scene.readout(mouse.tx - rect.x0, mouse.ty - rect.y0, rect.x1 - rect.x0, rect.y1 - rect.y0) ?? hint;
       }
     };
 
@@ -244,6 +307,13 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       if (introStart) uniforms.uProgress.value = easeOutExpo(clamp((t - introStart) / 2600));
       const b = host.getBoundingClientRect();
       uniforms.uScroll.value = clamp(-b.top / (b.height * 0.85));
+
+      if (heading >= 0) {
+        uniforms.uMix.value = clamp((t - changeStart) / CHANGE_MS);
+        if (uniforms.uMix.value >= 1) land(heading);
+      } else if (!reduce && holdStart && t - holdStart > HOLD_MS) {
+        go((shown + 1) % scenes.length, t);
+      }
 
       const idle = t - mouse.lastMove > 1400;
       mouse.strength += ((idle ? 0 : 1) - mouse.strength) * 0.06;
@@ -287,6 +357,14 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       start();
     };
 
+    // The caption's buttons pick a picture directly.
+    const onPick = (e: MouseEvent) => {
+      const button = (e.target as HTMLElement).closest<HTMLElement>("[data-scene-go]");
+      if (!button) return;
+      go(Number(button.dataset.sceneGo), performance.now());
+      start();
+    };
+
     const onLost = (e: Event) => {
       e.preventDefault();
       host.removeAttribute("data-particles");
@@ -305,7 +383,10 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       applyTheme();
       build();
       host.setAttribute("data-particles", "on");
+      host.setAttribute("data-scene", scenes[shown].id);
+      host.addEventListener("click", onPick);
       introStart = reduce ? 0 : performance.now() + 250;
+      holdStart = performance.now() + 1500;
       io.observe(host);
       ro.observe(host);
       themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
@@ -327,7 +408,9 @@ export default function ParticleField({ hostRef, targetRef }: Props) {
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onPointer);
       canvas.removeEventListener("webglcontextlost", onLost);
+      host.removeEventListener("click", onPick);
       host.removeAttribute("data-particles");
+      host.removeAttribute("data-scene");
       geometry.dispose();
       material.dispose();
       renderer.dispose();

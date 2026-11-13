@@ -1,12 +1,16 @@
 export const vertex = /* glsl */ `
   attribute vec2 aScatter;
+  attribute vec2 aScatterB;
   attribute vec2 aTarget;
   attribute float aSeed;
   attribute float aHot;
+  attribute float aHotB;
+  attribute float aJoin;
 
   uniform float uTime;
   uniform float uProgress;
   uniform float uScroll;
+  uniform float uMix;
   uniform vec2  uMouse;
   uniform float uMouseStrength;
   uniform float uRadius;
@@ -25,7 +29,17 @@ export const vertex = /* glsl */ `
     // Staggered morph: each point leaves on its own schedule.
     float local = clamp(uProgress * 1.6 - aSeed * 0.6, 0.0, 1.0);
     float form = easeOutCubic(local) * (1.0 - uScroll);
-    vec2 p = mix(aScatter, aTarget, form);
+
+    // Scene change: every point travels to its place in the next picture,
+    // on its own schedule and along a slight arc.
+    float m = clamp(uMix * 1.5 - aSeed * 0.5, 0.0, 1.0);
+    m = m * m * (3.0 - 2.0 * m);
+    vec2 scene = mix(aScatter, aScatterB, m);
+    scene += vec2(sin(aSeed * 91.0), cos(aSeed * 67.0)) * 34.0 * sin(m * 3.14159);
+    float hot = mix(aHot, aHotB, m);
+
+    // Only the headline's points leave the picture.
+    vec2 p = mix(scene, aTarget, form * aJoin);
 
     // Idle drift, larger while scattered so the plot breathes.
     float amp = mix(5.0, 1.2, form);
@@ -38,15 +52,15 @@ export const vertex = /* glsl */ `
     vec2 dir = d / dist;
     p += (dir * 46.0 + vec2(-dir.y, dir.x) * 18.0) * push;
 
-    vHot = aHot;
+    vHot = hot;
     vForm = form;
     vPush = push;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 0.0, 1.0);
-    float size = uSize * (abs(aHot) > 0.5 ? 1.65 : 1.0) * (1.0 + push * 1.2);
+    float size = uSize * (abs(hot) > 0.5 ? 1.65 : 1.0) * (1.0 + push * 1.2);
     // Glowing points get a larger sprite so the halo has room; the fragment
     // shader keeps the solid core at the original size.
-    vScale = (uGlow > 0.5 && aHot < -0.5) ? 3.2 : 1.0;
+    vScale = (uGlow > 0.5 && hot < -0.5) ? 3.2 : 1.0;
     gl_PointSize = size * vScale * uPixelRatio;
   }
 `;

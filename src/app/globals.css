@@ -292,3 +292,15 @@ body {
     display: none;
   }
 }
+
+/* Hero: the caption and marker for whichever picture is showing. */
+[data-scene="seats"] [data-caption="seats"],
+[data-scene="latency"] [data-caption="latency"],
+[data-scene="volcano"] [data-caption="volcano"] {
+  opacity: 1;
+}
+[data-scene="seats"] [data-caption-dot="seats"]::after,
+[data-scene="latency"] [data-caption-dot="latency"]::after,
+[data-scene="volcano"] [data-caption-dot="volcano"]::after {
+  background: var(--accent);
+}
