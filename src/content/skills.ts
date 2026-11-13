@@ -34,7 +34,7 @@ export const areas: SkillArea[] = [
     skills: [
       ...s(
         "proficient",
-        "Python, FastAPI, Django, Node.js, Express, PostgreSQL, Relational design, Redis, REST APIs, GraphQL APIs, Migrations, Auth, Event-driven workflows, Message queues, Load testing",
+        "Python, FastAPI, Django, Node.js, Express, PostgreSQL, Relational design, Redis, REST APIs, GraphQL APIs, Migrations, Auth, Event-driven workflows, Message queues, Load testing, Library design",
       ),
       ...s("familiar", "Service-oriented architecture, Observability, WebSockets at scale"),
     ],
