@@ -64,7 +64,9 @@ export function Hero() {
       </div>
 
       <div className="relative mx-auto w-full max-w-6xl">
-        <p className="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-muted">
+        {/* One line at every width. On a phone it sits over the plot, so it
+            gets its own backing to stay readable. */}
+        <p className="mb-5 inline-block whitespace-nowrap rounded-full bg-bg/85 py-1 pr-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted backdrop-blur-sm sm:bg-transparent sm:p-0 sm:text-xs sm:tracking-[0.2em] sm:backdrop-blur-none">
           <span className="mr-2 inline-block size-1.5 rounded-full bg-accent align-middle" />
           {site.role}
           <span className="mx-2 text-line-strong">/</span>
