@@ -5,7 +5,7 @@ export const site = {
   /** Shown beside the role in the hero. */
   experience: "6+ years",
   tagline:
-    "A full-stack engineer who designs, with 6+ years of building products end to end: data-rich interfaces, the APIs and databases behind them, and AI features. I care as much about how a product feels to use as how it holds up under load.",
+    "A full-stack engineer who designs, with 6+ years of professional experience building products end to end: data-rich interfaces, the APIs and databases behind them, and AI features. I care as much about how a product feels to use as how it holds up under load.",
   github: "https://github.com/tiff-xt",
   email: "", // optional: shown in the footer when set
   linkedin: "https://www.linkedin.com/in/tiffanytranx/",
