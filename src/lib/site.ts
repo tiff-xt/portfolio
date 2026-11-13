@@ -19,7 +19,7 @@ export type Project = {
   tags: string[];
   href?: string;
   repo?: string;
-  status: "live" | "building" | "planned";
+  status: "live" | "building" | "planned" | "library";
   /** Hue (0–360) for the card's generative cover. */
   hue: number;
   /** Featured projects lead the work section; the rest sit below as craft. */
@@ -67,6 +67,16 @@ export const projects: Project[] = [
     featured: true,
     proves: "AI product engineering, guardrails and evals",
     hue: 300,
+  },
+  {
+    slug: "onceonly",
+    title: "onceonly",
+    summary:
+      "A small Python library for a network that retries: idempotency keys, so a repeated request does its work once, and a transactional outbox, so an event is published if and only if its change was saved. Extracted from lobbyd and tested against real Postgres and Redis, races included.",
+    tags: ["Python", "SQLAlchemy", "Postgres", "Redis Streams", "Library design"],
+    repo: "https://github.com/tiff-xt/lobbyd/tree/main/libs/onceonly",
+    status: "library",
+    hue: 150,
   },
   {
     slug: "nightjar",

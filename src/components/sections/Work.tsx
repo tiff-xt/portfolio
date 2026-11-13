@@ -10,6 +10,7 @@ const STATUS = {
   live: { label: "Live", dot: "bg-accent-2" },
   building: { label: "In progress", dot: "bg-accent animate-[pulse-dot_1.6s_ease-in-out_infinite]" },
   planned: { label: "Up next", dot: "bg-line-strong" },
+  library: { label: "Library", dot: "bg-accent-2" },
 };
 
 export function Work() {
@@ -32,7 +33,7 @@ export function Work() {
         <div className="mb-6 mt-20 flex items-baseline justify-between gap-6 border-t border-line pt-8">
           <h3 className="font-display text-3xl tracking-tight sm:text-4xl">Craft and experiments</h3>
           <p className="hidden max-w-sm text-right text-sm text-muted sm:block">
-            Smaller builds where the point is the medium: graphics, motion, sound and an npm library.
+            Smaller builds where the point is the medium: a backend library, graphics, motion, sound and an npm package.
           </p>
         </div>
         <ul className="grid gap-6 sm:grid-cols-2">

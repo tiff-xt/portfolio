@@ -191,6 +191,45 @@ function motif(slug: string, hue: number) {
           ))}
         </g>
       );
+    case "onceonly": {
+      // Three deliveries of one request go in; one piece of work comes out,
+      // and its event waits in the outbox until it is published.
+      const tries = [62, 100, 138];
+      return (
+        <g className="origin-center transition-transform duration-700 ease-out group-hover:scale-[1.05]">
+          {tries.map((y, i) => (
+            <g key={y}>
+              <circle cx="40" cy={y} r="4" fill={i === 0 ? stroke : "none"} stroke={stroke} strokeWidth="1.5" />
+              <path
+                d={`M48 ${y} C 90 ${y}, 96 100, 128 100`}
+                fill="none"
+                stroke={stroke}
+                strokeWidth="1.5"
+                strokeOpacity={i === 0 ? 0.9 : 0.45}
+                strokeDasharray={i === 0 ? undefined : "4 4"}
+              />
+            </g>
+          ))}
+          <rect x="128" y="80" width="40" height="40" rx="8" fill="none" stroke={stroke} strokeWidth="1.5" />
+          <path d="M140 100 l6 6 l11 -13" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="168" y1="100" x2="204" y2="100" stroke={stroke} strokeWidth="1.5" />
+          {[0, 1, 2, 3].map((i) => (
+            <rect
+              key={i}
+              x={206 + i * 22}
+              y="90"
+              width="16"
+              height="20"
+              rx="3"
+              fill={i < 2 ? "var(--accent-2)" : "none"}
+              fillOpacity={i < 2 ? 0.85 : 1}
+              stroke={i < 2 ? "none" : "currentColor"}
+              strokeOpacity=".3"
+            />
+          ))}
+        </g>
+      );
+    }
     default:
       return (
         <g fill="none" stroke={stroke} strokeWidth="1">
