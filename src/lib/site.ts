@@ -69,12 +69,12 @@ export const projects: Project[] = [
     hue: 300,
   },
   {
-    slug: "onceonly",
-    title: "onceonly",
+    slug: "oncely",
+    title: "oncely",
     summary:
       "A small Python library for a network that retries: idempotency keys, so a repeated request does its work once, and a transactional outbox, so an event is published if and only if its change was saved. Extracted from lobbyd and tested against real Postgres and Redis, races included.",
     tags: ["Python", "SQLAlchemy", "Postgres", "Redis Streams", "Library design"],
-    repo: "https://github.com/tiff-xt/onceonly",
+    repo: "https://github.com/tiff-xt/oncely",
     status: "library",
     hue: 150,
   },

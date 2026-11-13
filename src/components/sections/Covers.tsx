@@ -191,7 +191,7 @@ function motif(slug: string, hue: number) {
           ))}
         </g>
       );
-    case "onceonly": {
+    case "oncely": {
       // Three deliveries of one request go in; one piece of work comes out,
       // and its event waits in the outbox until it is published.
       const tries = [62, 100, 138];
